@@ -243,6 +243,12 @@ body {
   cursor: pointer;
 }
 
+.tb-link {
+  background: #c4622d;
+  color: #fff;
+  text-decoration: none;
+}
+
 .tb-btn:hover {
   background: rgba(255, 255, 255, 0.18);
 }

@@ -24,6 +24,7 @@ export class Toolbar {
       <button type="button" class="tb-btn" data-k="view">Dollhouse</button>
       <button type="button" class="tb-btn" data-k="door">Door</button>
       <button type="button" class="tb-btn" data-k="wardrobe">Wardrobe</button>
+      <a class="tb-btn tb-link" href="tour/">360° tour</a>
       <span class="tb-hint">Drag: look · Shift+drag, right-drag, two-finger swipe or ←→: move sideways · ↑↓/scroll: walk/zoom · double-click: zoom to object</span>`;
     parent.appendChild(this.root);
 

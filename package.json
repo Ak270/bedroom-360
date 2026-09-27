@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "shots": "node scripts/shots.mjs"
+    "shots": "node scripts/shots.mjs",
+    "deploy": "./scripts/deploy.sh"
   },
   "dependencies": {
     "camera-controls": "3.1.2",
