@@ -247,12 +247,15 @@ function openCard(it: Measured): void {
 const proj = new THREE.Vector3();
 function placeHotspots(): void {
   const w = view.clientWidth, h = view.clientHeight;
-  // Anything whose label would slide under the bottom bar is hidden rather than half-covered.
-  const barTop = (document.querySelector('.bar') as HTMLElement).getBoundingClientRect().top - 24;
+  // Hotspots just behind the bottom bar are lifted clear of it; ones far below it are hidden.
+  const barTop = (document.querySelector('.bar') as HTMLElement).getBoundingClientRect().top - 8;
   for (const hs of hotspots) {
     proj.copy(hs.dir).project(camera);
-    const x = ((proj.x + 1) / 2) * w, y = ((1 - proj.y) / 2) * h;
-    const inFront = proj.z < 1 && Math.abs(proj.x) < 0.96 && Math.abs(proj.y) < 0.92 && y < barTop;
+    const x = ((proj.x + 1) / 2) * w;
+    let y = ((1 - proj.y) / 2) * h;
+    const lim = barTop - (hs.el.offsetHeight || 64) / 2;
+    const inFront = proj.z < 1 && Math.abs(proj.x) < 0.96 && Math.abs(proj.y) < 0.92 && y < lim + 120;
+    y = Math.min(y, lim);
     hs.el.style.display = inFront ? '' : 'none';
     if (inFront) hs.el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
   }
