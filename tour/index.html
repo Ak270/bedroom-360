@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Bedroom 360° Tour</title>
+    <meta name="description" content="Walk through the bedroom design in 360°: blue accent wall, walnut king bed, 2' wardrobe with his/hers storage, study corner. Tap ⓘ for sizes and colour names." />
+    <!-- Link previews (WhatsApp, Facebook, LinkedIn, X): image must be an absolute URL. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Bedroom 360° Tour" />
+    <meta property="og:description" content="Look around the new bedroom design in 360°. Tap ⓘ for sizes and paint/laminate colours." />
+    <meta property="og:url" content="https://ak270.github.io/bedroom-360/tour/" />
+    <meta property="og:image" content="https://ak270.github.io/bedroom-360/tour/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://ak270.github.io/bedroom-360/tour/og.jpg" />
+    <meta name="theme-color" content="#1c1814" />
+    <link rel="stylesheet" href="/src/tour/tour.css" />
+  </head>
+  <body>
+    <div id="view" aria-label="360 degree view. Drag to look around."></div>
+    <div id="fade" aria-hidden="true"></div>
+    <div id="hotspots" aria-hidden="false"></div>
+    <header class="top">
+      <div class="title">
+        <strong>Bedroom 360°</strong>
+        <span id="spot-name">Loading…</span>
+      </div>
+      <svg id="map" viewBox="0 0 100 70" role="img" aria-label="Floor plan with tour spots"></svg>
+    </header>
+    <div id="card" hidden></div>
+    <nav class="bar" aria-label="Tour controls">
+      <div id="spots" class="chips"></div>
+      <div class="actions">
+        <button type="button" id="btn-info" aria-pressed="false" title="Show sizes and colour names">ⓘ Sizes &amp; colours</button>
+        <button type="button" id="btn-gyro" hidden>Tilt to look</button>
+        <button type="button" id="btn-share">Share</button>
+        <button type="button" id="btn-full" title="Full screen">⛶</button>
+        <a id="btn-3d" href="../" title="Open the interactive 3D walkthrough">Explore in 3D</a>
+      </div>
+    </nav>
+    <div id="hint">Drag to look around · tap arrows to move</div>
+    <div id="toast" role="status" aria-live="polite" hidden></div>
+    <script type="module" src="/src/tour/main.ts"></script>
+  </body>
+</html>

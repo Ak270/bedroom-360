@@ -1,0 +1,311 @@
+:root {
+  --ink: #2b2620;
+  --paper: #f4ede0;
+  --accent: #24506b;
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #1a1714;
+}
+
+#app,
+#app canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+#loading {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(ellipse at center, #2c2620 0%, #15120f 100%);
+  color: var(--paper);
+  transition: opacity 0.8s ease;
+  z-index: 10;
+}
+
+#loading.done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-inner {
+  width: min(320px, 70vw);
+  text-align: center;
+}
+
+.loading-title {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 12px;
+  opacity: 0.8;
+  margin: 0 0 14px;
+}
+
+.bar {
+  height: 2px;
+  background: rgba(244, 237, 224, 0.15);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  width: 0%;
+  background: #d9b98b;
+  transition: width 0.25s ease;
+}
+
+.loading-pct {
+  font-size: 11px;
+  opacity: 0.55;
+  margin: 10px 0 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------- measurements */
+.measure-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.dim-tag {
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Leader from the card down to the anchor point. */
+.dim-tag::after {
+  content: '';
+  width: 1px;
+  height: calc(14px + var(--lift, 0px)); /* grows when de-clutter lifts the card */
+  background: rgba(196, 98, 45, 0.9);
+}
+
+.dim-tag::before {
+  content: '';
+  order: 2;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #c4622d;
+  margin-top: -1px;
+}
+
+.dim-card {
+  pointer-events: auto;
+  contain: layout paint;
+  cursor: zoom-in;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  padding: 5px 8px 6px;
+  border: 1px solid rgba(43, 38, 32, 0.12);
+  border-radius: 7px;
+  /* No backdrop-filter: it re-blurs the live canvas under every card each frame. */
+  background: rgba(252, 249, 243, 0.94);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  box-shadow: 0 2px 10px rgba(20, 14, 8, 0.18);
+  white-space: nowrap;
+  transition: transform 0.15s ease;
+}
+
+.dim-card:hover {
+  transform: translateY(-1px);
+}
+
+.dim-name {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.dim-ft {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: #9c4a1f;
+  font-weight: 600;
+}
+
+.dim-m,
+.dim-note {
+  font-size: 10px;
+  color: rgba(43, 38, 32, 0.65);
+  font-variant-numeric: tabular-nums;
+}
+
+.dim-room {
+  pointer-events: none;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #c4622d;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dim-room small {
+  margin-left: 6px;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.dim-colours {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 3px;
+  padding-top: 3px;
+  border-top: 1px solid rgba(43, 38, 32, 0.1);
+}
+
+.dim-colour {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: rgba(43, 38, 32, 0.8);
+}
+
+.dim-colour i {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+}
+
+/* Dollhouse: compact tags (name + feet-inches). */
+.measure-layer.compact .dim-m,
+.measure-layer.compact .dim-note,
+.measure-layer.compact .dim-cname {
+  display: none;
+}
+
+/* Compact: colour swatches stay, in a row. */
+.measure-layer.compact .dim-colours {
+  flex-direction: row;
+  border-top: 0;
+  margin-top: 1px;
+  padding-top: 0;
+}
+
+.measure-layer.compact .dim-card {
+  padding: 3px 6px 4px;
+}
+
+/* ---------------------------------------------------------------- toolbar */
+.toolbar {
+  position: fixed;
+  left: 50%;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  max-width: calc(100vw - 32px);
+  padding: 6px;
+  border-radius: 12px;
+  background: rgba(28, 24, 20, 0.82);
+  z-index: 5;
+}
+
+.tb-btn {
+  border: 0;
+  border-radius: 8px;
+  padding: 7px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #f4ede0;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.tb-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.tb-btn[aria-pressed='true'] {
+  background: #d9b98b;
+  color: #2b2620;
+}
+
+.tb-hint {
+  color: rgba(244, 237, 224, 0.7);
+  font-size: 11px;
+  padding: 0 6px;
+}
+
+@media (max-width: 600px) {
+  .tb-hint {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------- move pad */
+.move-pad {
+  position: fixed;
+  right: calc(16px + env(safe-area-inset-right, 0px));
+  bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  display: grid;
+  grid-template-columns: repeat(3, 38px);
+  grid-template-rows: repeat(2, 38px);
+  gap: 4px;
+  z-index: 5;
+}
+
+.move-pad button {
+  border: 0;
+  border-radius: 9px;
+  background: rgba(28, 24, 20, 0.82);
+  color: #f4ede0;
+  font-size: 13px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.move-pad button:hover {
+  background: rgba(60, 52, 44, 0.9);
+}
+
+.move-pad [data-dir='forward'] {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.move-pad [data-dir='left'] {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.move-pad [data-dir='back'] {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.move-pad [data-dir='right'] {
+  grid-column: 3;
+  grid-row: 2;
+}

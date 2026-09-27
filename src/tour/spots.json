@@ -1,0 +1,72 @@
+{
+  "note": "360 tour spots (CLIENT: 6 spots, evening lighting). pos in room metres (x east, y up, z south); heading = starting view, compass degrees (0 north, 90 east, 180 south, 270 west).",
+  "eyeHeight": 1.5,
+  "spots": [
+    {
+      "id": "doorway",
+      "name": "Doorway",
+      "pos": [
+        0.55,
+        1.5,
+        -1.35
+      ],
+      "heading": 200,
+      "wardrobeOpen": false
+    },
+    {
+      "id": "bed",
+      "name": "Foot of the bed",
+      "pos": [
+        -0.48,
+        1.5,
+        -0.8
+      ],
+      "heading": 180,
+      "wardrobeOpen": false
+    },
+    {
+      "id": "study",
+      "name": "Study corner",
+      "pos": [
+        1.2,
+        1.45,
+        0.2
+      ],
+      "heading": 139,
+      "wardrobeOpen": false
+    },
+    {
+      "id": "wardrobe",
+      "name": "Beside the wardrobe",
+      "pos": [
+        -1.15,
+        1.5,
+        -0.5
+      ],
+      "heading": 235,
+      "wardrobeOpen": false
+    },
+    {
+      "id": "window",
+      "name": "Window side",
+      "pos": [
+        1.9,
+        1.5,
+        0.15
+      ],
+      "heading": 265,
+      "wardrobeOpen": false
+    },
+    {
+      "id": "dresser",
+      "name": "Wardrobe open \u00b7 dresser",
+      "pos": [
+        -0.8,
+        1.5,
+        -0.95
+      ],
+      "heading": 232,
+      "wardrobeOpen": true
+    }
+  ]
+}
